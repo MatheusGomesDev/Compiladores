@@ -1,0 +1,7 @@
+/* Primeira Aula Prática - CERTO */
+
+if a_42 <= 42 then
+	if a_42 > 100 then
+		executaOperacoes
+else
+	executaOutrasOperacoes

@@ -1,0 +1,8 @@
+oi_+++
+/* entre comentario de blocoad asd as dasd** * ** dsadas * gfdg * dasdasdd/* dfadasd */s
+funcao()
+"soma: " 1+1
+numero_10 22.443
+"divisao: " 10/2
+//comentario de uma linha asdasda sads asd asd asd asd
+idVariavel_1

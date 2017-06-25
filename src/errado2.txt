@@ -1,0 +1,7 @@
+//Aqui irei tentar utilizar um simbolo que não existe na gramatica como variavel
+
+print ("Teste de novo simbolo { ou }");
+
+for(int x = 1; x<10;x++){
+	System.out.println("Funcionou?");
+}

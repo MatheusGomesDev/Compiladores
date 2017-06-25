@@ -1,0 +1,17 @@
+/*
+*Aqui vou colocar um pedaço do main do codigo trocando o "{" por "["
+*/
+do [
+            token = lexer.proxToken();
+
+            // Imprime token
+            if (token != null) [
+                System.out.println("Token: " + token.toString() + "\t Linha: " + n_line);
+
+                // Verifica se existe o lexema na tabela de símbolos
+                if (tabelaSimbolos.retornaToken(token.getLexema()) == null) ]
+                    tabelaSimbolos.put(token, new InfIdentificador());
+                ]
+            ]
+
+        ] while (token != null && token.getClasse() != Tag.EOF);

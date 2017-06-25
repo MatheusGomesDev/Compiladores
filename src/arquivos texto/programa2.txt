@@ -1,0 +1,6 @@
+/* Primeira Aula Prática - ERRADO */
+
+if a = 42 then
+	executaOperacoes
+else
+	executaOutrasOperacoes

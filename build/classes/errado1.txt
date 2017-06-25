@@ -1,0 +1,24 @@
+﻿//Aqui irei abrir uma string e n�o fechar para que possa dar erro
+
+"ola meu nome � Matheus e esse � um trabalho de Compiladores!!
+x = 10
+y = 30.
+
+diasiadsjipadsipoasjisdo %
+
+asdasdasdasd
+
+
+ss aqui tem que dar um erro ou nao
+/* 
+*/
+
+
+
+
+
+
+
+
+
+var_som = x + y

@@ -1,0 +1,5 @@
+/* um comentario */
+var_id = 10
+"nome string"
+x = 10;
+int = x;

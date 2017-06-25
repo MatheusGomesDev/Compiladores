@@ -1,0 +1,8 @@
+/* Primeiro Teste */
+
+public class Teste
+	
+    SystemOutDispln(5 + 6 ** 8); /* erro sintatico em '**' */
+end
+
+/* fim */
