@@ -398,19 +398,19 @@ public class Lexer {
                     return new Token(Tag.OpAtribuicao, "=");
                 case 32:
                     retornaPonteiro();
-                    return new Token(Tag.DemilitadorFuncao, "(");
+                    return new Token(Tag.AbreParenteses, "(");
                 case 33:
                     retornaPonteiro();
-                    return new Token(Tag.DemilitadorFuncao, ")");
+                    return new Token(Tag.FechaParenteses, ")");
                 case 34:
                     retornaPonteiro();
                     return new Token(Tag.Virgula, ",");
                 case 35:
                     retornaPonteiro();
-                    return new Token(Tag.Demilitador, "[");
+                    return new Token(Tag.AbreColchetes, "[");
                 case 36:
                     retornaPonteiro();
-                    return new Token(Tag.Demilitador, "]");
+                    return new Token(Tag.FechaColchetes, "]");
                 case 37:
                     retornaPonteiro();
                     return new Token(Tag.OpSubtracao, "-");
@@ -427,10 +427,11 @@ public class Lexer {
     public static void main(String[] args) {
         TS tabelaSimbolos = new TS();
         Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Trabalho compiladoes Ultimo 24062017\\TrabCompiladoresAAA1\\src\\errado1.txt");
+        Sintatico sintatico = new Sintatico(lexer, tabelaSimbolos);
         Token token;
 
         // Enquanto não houver erros ou não for fim de arquivo:
-        do {
+        /*do {
             token = lexer.proxToken();
 
             // Imprime token
@@ -444,7 +445,7 @@ public class Lexer {
             }
 
         } while (token != null && token.getClasse() != Tag.EOF);
-        lexer.fechaArquivo();
+        lexer.fechaArquivo();*/
 
         // Imprime a tabela de simbolos
         System.out.println("");
