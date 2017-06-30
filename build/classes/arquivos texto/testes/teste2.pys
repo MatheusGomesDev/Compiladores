@@ -1,0 +1,31 @@
+/* Teste2:
+*  contem erro lexico 
+*/
+
+class Teste-T2: // nao eh erro lexico e alem, o '-' eh OPSUB
+	def bool exemploFunc@o(integer x, integer y): // erro 1: simbolo "@"
+		while(x < = y): // nao eh erro lexico
+			y = --y;
+		end;
+		return false;
+	end;
+
+	defstatic void main(String[] arg):
+		double x;
+		integer y;
+
+		y = 2,0; // nao eh erro lexico
+		x = 00.,42 * y; // erro 2: simbolo [,]
+		z = 10.; // erro 3: simbolo (.)
+		
+		if(!(z != 10.00)):
+			writeln(x <= y);
+		end;
+			
+		if (!exemploDeFuncao(x, y) or exemploDeFuncao(x,$)): // erro 4: simbolo $
+			write("Entrou aqui);
+			// erro 5: string nao fechada apos quebra de linha
+		end;
+	end;
+end.
+			

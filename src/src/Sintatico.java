@@ -28,17 +28,20 @@ public class Sintatico {
         this.errosSintaticos++;
         System.out.println("Erro sintatico na linha " + lexico.getLinha() + " e coluna " + lexico.getColuna() + ":");
         System.out.println(mensagem + "\n");
-        if(this.errosSintaticos == 5){
+        if (this.errosSintaticos == 5) {
             System.out.println("O número de erros sintáticos atingiu o limite de 5. O analisador sintático será abortado!!");
+            System.exit(0);
         }
     }
 
     // lexer retorna o proximo token
     public void advance() {
+
         token = lexico.proxToken();
-        if (token != null) {
+        //Para mostrar os Tokens, descomenteo IF abaixo
+        /*if (token != null) {
             System.out.println("Token: " + token.toString() + "\t Linha: " + lexico.getLinha());
-        }
+        }*/
         if (tabSimbolos.retornaToken(token.getLexema()) == null) {
             tabSimbolos.put(token, new InfIdentificador());
         }
@@ -48,7 +51,7 @@ public class Sintatico {
     public boolean eat(Tag tokenzinho) {
 
         // enquanto token nao reconhecido (modo panico Lexer)
-        while(lexico.getErros() > this.errosLexicos) {
+        while (lexico.getErros() > this.errosLexicos) {
             advance();
             this.errosLexicos = lexico.getErros();
         }
@@ -78,8 +81,8 @@ public class Sintatico {
             //skip()
             erroSintatico("Esperado 'class', porem encontrado '" + token.getLexema() + "'");
         }
-        
-        System.out.println("Analise sintatica concluida com sucesso!");
+
+        System.out.println("Análise sintatica concluida com sucesso!");
     }
 
     public void Classe() {

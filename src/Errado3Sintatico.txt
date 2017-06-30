@@ -1,0 +1,13 @@
+/* Ultimo erro com apenas 4 erros sintaticos, para mostar que o modo panico funciona */
+
+class UltimoErro: 
+	def bool exemploFuncao(): 
+		return false;
+	end;
+
+	defstatic void main(String[] arg):		
+		Integer z = 10
+
+	end;
+end.
+			

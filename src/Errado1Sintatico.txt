@@ -1,0 +1,14 @@
+//Erro Sintatico com mais de 5 em seguida e abortando.
+
+class Uma_classe_diferente :
+	def double umNovoIdCom_Number3 () : 
+		//Faz alguma coisa, teste simbolo comentario %¨&
+	end;
+	
+	defstatic void main (String[] outro_id_qualquer) :
+		if)x == false(  : 
+			integer z = 99;
+		end 
+	end;
+end.
+	

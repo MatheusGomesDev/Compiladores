@@ -1,0 +1,14 @@
+//Erro sintatico na declaração das variaveis
+
+
+class Uma_classe_Inovadora :
+	def double umNovoId () : 
+		Integer palavra = 10;
+	end;
+	
+	defstatic void main (String[] outro_id_qualquer) :
+			Bool boleano = 20;
+		end 
+	end;
+end.
+	

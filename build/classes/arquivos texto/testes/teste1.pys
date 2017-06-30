@@ -1,0 +1,21 @@
+/* Teste1:
+*  nao contem erro lexico 
+*/
+
+class Teste1:
+	def bool booleanFunction():
+		return false;
+	end;
+	
+
+	defstatic void main(String[] args):
+		writeln("Teste 1:\n");
+		writeln("");
+			
+		if (booleanFunction()):
+			writeln("N@o entrei aqui.");
+		else:
+			writeln("Mas aqui &u entrei!");
+		end;
+	end;
+end.			

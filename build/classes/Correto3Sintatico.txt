@@ -1,0 +1,10 @@
+class Uma_classe_diferente :
+	def double umNovoIdCom_Number3 () : 
+		//Faz alguma coisa, teste simbolo comentario %¨&
+	end;
+	
+	defstatic void main (String[] outro_id_qualquer) :
+		bool testeVar = false;
+	end;
+end.
+	

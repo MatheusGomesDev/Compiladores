@@ -1,0 +1,12 @@
+class id1 :
+	def String umNovoIdCom_Number3 () : 
+		//Vazio
+	end;
+	
+	defstatic void main (String[] id2) :
+		/*
+		* Funcão Vazia
+		*/
+	end;
+end.
+	

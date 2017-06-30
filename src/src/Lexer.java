@@ -94,7 +94,7 @@ public class Lexer {
             if (lookahead != END_OF_FILE) {
                 instance_file.seek(instance_file.getFilePointer());
                 prox = (char) instance_file.read();
-                retornaPonteiro();
+                //retornaPonteiro();
 
                 return prox;
             }
@@ -140,7 +140,7 @@ public class Lexer {
                         if (c == '*') {
                             char prox = verificaProximo();
                             if (prox == '/') {
-                                retornaPonteiro();
+                                //retornaPonteiro();
                                 comentarioBloco = false;
                                 break;
                             }
@@ -188,6 +188,7 @@ public class Lexer {
                         estado = 22;
                     } else if (c == ';') {
                         estado = 7;
+                        retornaPonteiro();
                     } else if (c == ':') {
                         estado = 20;
                     } else if (c == '.') {
@@ -344,11 +345,17 @@ public class Lexer {
                     }
                 case 18:
                     if (estado == 18) {
-                        return new Token(Tag.Comentario, "/*");
+                        //return new Token(Tag.Comentario, "/*");
+                        lexema = new StringBuilder();
+                        estado = 0;
+                        break;
                     }
                 case 19:
                     if (estado == 19) {
-                        return new Token(Tag.Comentario, "//");
+                        //return new Token(Tag.Comentario, "//");
+                        lexema = new StringBuilder();
+                        estado = 0;
+                        break;
                     }
                 case 20:
                     retornaPonteiro();
@@ -365,7 +372,8 @@ public class Lexer {
 
                 case 23:
                     if (estado == 23) {
-                        return new Token(Tag.Comentario, "*/");
+                        //return new Token(Tag.Comentario, "*/");
+                        lexema = new StringBuilder();
                     }
                 case 24:
                     retornaPonteiro();
@@ -431,33 +439,15 @@ public class Lexer {
      */
     public static void main(String[] args) {
         TS tabelaSimbolos = new TS();
-        Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Trabalho compiladoes Ultimo 24062017\\TrabCompiladoresAAA1\\src\\testesintatico.txt");
-        Sintatico sintatico = new Sintatico(lexer, tabelaSimbolos);
-        Token token;
-        
+        Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Trabalho compiladoes Ultimo 24062017\\TrabCompiladoresAAA1\\src\\Errado3Sintatico.txt");
+        Sintatico sintatico = new Sintatico(lexer, tabelaSimbolos);  
         sintatico.Programa();
-
-        // Enquanto não houver erros ou não for fim de arquivo:
-        /*do {
-            token = lexer.proxToken();
-
-            // Imprime token
-            if (token != null) {
-                System.out.println("Token: " + token.toString() + "\t Linha: " + n_line);
-
-                // Verifica se existe o lexema na tabela de símbolos
-                if (tabelaSimbolos.retornaToken(token.getLexema()) == null) {
-                    tabelaSimbolos.put(token, new InfIdentificador());
-                }
-            }
-
-        } while (token != null && token.getClasse() != Tag.EOF);
-        lexer.fechaArquivo();*/
-
-        // Imprime a tabela de simbolos
+        // Para imprimir a tabela de simbolos, descomente o codigo abaixo
+        /*
         System.out.println("");
         System.out.println("Tabela de símbolos:");
         System.out.println(tabelaSimbolos.toString());
+        */
 
     }
 
