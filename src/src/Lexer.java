@@ -439,6 +439,8 @@ public class Lexer {
      */
     public static void main(String[] args) {
         TS tabelaSimbolos = new TS();
+        // Os exemplos certos chamam Errado3Sintatico.txt / Errado2Sintatico.txt / Errado1Sintatico.txt
+        // Os exemplos errados chamam Certo3Sintatico.txt / Certo2Sintatico.txt / Certo1Sintatico.txt
         Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Trabalho compiladoes Ultimo 24062017\\TrabCompiladoresAAA1\\src\\Errado3Sintatico.txt");
         Sintatico sintatico = new Sintatico(lexer, tabelaSimbolos);  
         sintatico.Programa();
