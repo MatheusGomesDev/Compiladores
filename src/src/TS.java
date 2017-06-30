@@ -119,6 +119,16 @@ public class TS {
         return null;
     }
 
+    // Pesquisa na tabela de símbolos se há algum tokem com determinado lexema e retorna a tag
+    public Tag retornaTag(String lexema) {
+        for (Token token : tabelaSimbolos.keySet()) {
+            if (token.getLexema().equals(lexema)) {
+                return token.getClasse();
+            }
+        }
+        return Tag.KW;
+    }
+
     @Override
     public String toString() {
         String saida = "";

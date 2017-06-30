@@ -31,6 +31,13 @@ public class Sintatico {
     // lexer retorna o proximo token
     public void advance() {
         token = lexico.proxToken();
+        if (token != null) {
+            System.out.println("Token: " + token.toString() + "\t Linha: " + lexico.getLinha());
+        }
+        if (tabSimbolos.retornaToken(token.getLexema()) == null) {
+            tabSimbolos.put(token, new InfIdentificador());
+        }
+
     }
 
     public boolean eat(Tag tokenzinho) {
@@ -65,6 +72,8 @@ public class Sintatico {
             //skip()
             erroSintatico("Esperado 'class', porem encontrado '" + token.getLexema() + "'");
         }
+        
+        System.out.println("Analise sintatica concluida com sucesso! Nenhum erro sintatico Encontrado");
     }
 
     public void Classe() {

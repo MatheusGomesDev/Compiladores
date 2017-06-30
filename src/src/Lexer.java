@@ -18,6 +18,7 @@ public class Lexer {
     private static int lookahead = 0; // armazena o último caractere lido do arquivo	
     public static int n_line = 1; // contador de linhas
     public static int n_column = 0; // contador de colunas
+    public static int n_error = 0; // contador de erros
     private RandomAccessFile instance_file;
     private boolean comentarioBloco = false;
     private boolean comentarioLinha = false;
@@ -49,7 +50,7 @@ public class Lexer {
 
     //Reporta erro para o usuário
     public void sinalizaErro(String mensagem) {
-
+        n_error++;
         System.out.println("[Erro Lexico]: " + mensagem + "\n");
     }
 
@@ -222,7 +223,7 @@ public class Lexer {
                     //verifica se é uma palavra reservada que já está na tabela de simbolos
                     if (tabelaSimbolos.retornaToken(lexema.toString()) != null) {
                         //se sim eu retorno como uma palavra reservada
-                        return new Token(Tag.KW, lexema.toString());
+                        return new Token(tabelaSimbolos.retornaTag(lexema.toString()), lexema.toString());
                     } else {
                         //se não retorno  como ID
                         return new Token(Tag.ID, lexema.toString());
@@ -271,7 +272,7 @@ public class Lexer {
                     retornaPonteiro();
                     return new Token(Tag.ConstDouble, lexema.toString());
                 case 7:
-                    return new Token(Tag.FinalExpressao, ";");
+                    return new Token(Tag.PontoVirgula, ";");
 
                 case 8:
                     if (c == '"') {
@@ -426,9 +427,11 @@ public class Lexer {
      */
     public static void main(String[] args) {
         TS tabelaSimbolos = new TS();
-        Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Trabalho compiladoes Ultimo 24062017\\TrabCompiladoresAAA1\\src\\errado1.txt");
+        Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Trabalho compiladoes Ultimo 24062017\\TrabCompiladoresAAA1\\src\\testesintatico.txt");
         Sintatico sintatico = new Sintatico(lexer, tabelaSimbolos);
         Token token;
+        
+        sintatico.Programa();
 
         // Enquanto não houver erros ou não for fim de arquivo:
         /*do {

@@ -1,0 +1,2 @@
+class auxiliar : defstatic void main ( String [] %auxiliar2 ) : end ;
+class auxiliar : defstatic void main ( String [] %auxiliar2 ) : end ;
