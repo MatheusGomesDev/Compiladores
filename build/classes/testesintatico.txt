@@ -1,2 +1,1 @@
-class auxiliar : defstatic void main ( String [] %auxiliar2 ) : end ;
-class auxiliar : defstatic void main ( String [] %auxiliar2 ) : end ;
+class id1 : defstatic void main ( String [] id2 ) : #%ии  end id3 id4 id5 id6; end id7 .

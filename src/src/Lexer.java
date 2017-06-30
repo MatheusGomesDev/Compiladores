@@ -72,6 +72,10 @@ public class Lexer {
         return n_line;
     }
     
+    public int getErros(){
+        return n_error;
+    }
+    
     public int getColuna(){
         return n_column;
     }

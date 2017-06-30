@@ -1,0 +1,1 @@
+class id1 : defstatic void main ( String [] id2 ) : end ; end .

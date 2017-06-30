@@ -9,6 +9,8 @@ public class Sintatico {
     private final Lexer lexico;
     private Token token;
     private TS tabSimbolos;
+    private int errosSintaticos = 0;
+    private int errosLexicos = 0;
 
     public Sintatico(Lexer lexico, TS tabSimbolos) {
 
@@ -23,9 +25,12 @@ public class Sintatico {
     }
 
     public void erroSintatico(String mensagem) {
-
+        this.errosSintaticos++;
         System.out.println("Erro sintatico na linha " + lexico.getLinha() + " e coluna " + lexico.getColuna() + ":");
         System.out.println(mensagem + "\n");
+        if(this.errosSintaticos == 5){
+            System.out.println("O número de erros sintáticos atingiu o limite de 5. O analisador sintático será abortado!!");
+        }
     }
 
     // lexer retorna o proximo token
@@ -43,9 +48,10 @@ public class Sintatico {
     public boolean eat(Tag tokenzinho) {
 
         // enquanto token nao reconhecido (modo panico Lexer)
-        /*while (token.getClasse() == Lexer.ERRO) {
+        while(lexico.getErros() > this.errosLexicos) {
             advance();
-        }*/
+            this.errosLexicos = lexico.getErros();
+        }
         // se token eh o terminal esperado
         if (token.getClasse() == tokenzinho) {
             advance();
@@ -73,7 +79,7 @@ public class Sintatico {
             erroSintatico("Esperado 'class', porem encontrado '" + token.getLexema() + "'");
         }
         
-        System.out.println("Analise sintatica concluida com sucesso! Nenhum erro sintatico Encontrado");
+        System.out.println("Analise sintatica concluida com sucesso!");
     }
 
     public void Classe() {
