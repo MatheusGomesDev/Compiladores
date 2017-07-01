@@ -1,17 +1,9 @@
-/*
-Falta arrumar na classe sintatico, a questão do erro no while. Sepois implementar a ligação do mains/lexer/sintatico
-Em seguida implementar as funções da tabela.
- */
 package src;
 
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author matheus
- */
 public class Lexer {
 
     private static final int END_OF_FILE = -1; // contante para fim do arquivo
@@ -440,8 +432,8 @@ public class Lexer {
     public static void main(String[] args) {
         TS tabelaSimbolos = new TS();
         // Os exemplos certos chamam Errado3Sintatico.txt / Errado2Sintatico.txt / Errado1Sintatico.txt
-        // Os exemplos errados chamam Certo3Sintatico.txt / Certo2Sintatico.txt / Certo1Sintatico.txt
-        Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Trabalho compiladoes Ultimo 24062017\\TrabCompiladoresAAA1\\src\\Errado3Sintatico.txt");
+        // Os exemplos errados chamam Correto3Sintatico.txt / Correto2Sintatico.txt / Correto1Sintatico.txt
+        Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Trabalho compiladoes Ultimo 24062017\\TrabCompiladoresAAA1\\src\\Correto3Sintatico.txt");
         Sintatico sintatico = new Sintatico(lexer, tabelaSimbolos);  
         sintatico.Programa();
         // Para imprimir a tabela de simbolos, descomente o codigo abaixo

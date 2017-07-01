@@ -1,9 +1,5 @@
 package src;
 
-/**
- *
- * @author matheus
- */
 public class Sintatico {
 
     private final Lexer lexico;
@@ -69,34 +65,55 @@ public class Sintatico {
         return token.getClasse() == t;
     }
 
-    public void Programa() {
+    public void Skip() {
+        //O skip faz o papel de pegar o proximo token da lista de entrada.
+        erroSintatico("Ocorreu a execução da recuperação de erro pelo método Skip");
+        advance();
+    }
+
+    public boolean Sync() {
+        //O sync em um parser preditivo recursivo, para ter a mesma função de desimpilhar da pilha, foi implementado um return que tira 
+        //o não terminal da ultima posição da recursividade. Ele tem um return que tem como função retornar ao metodo anterior. 
+        //Para implementar este return com a ação de skip, foi necessario mudar as classes de void para boolean para que pudesse retornar true ou false
+        erroSintatico("Ocorreu a execução da recuperação de erro pelo método Sync");
+        return true;
+
+    }
+
+    public boolean Programa() {
 
         advance();
 
         if (isToken(Tag.KW_compClass)) {
             Funcao1();
         } else if (isToken(Tag.EOF)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'class', porem encontrado '" + token.getLexema() + "'");
         }
 
         System.out.println("Análise sintatica concluida com sucesso!");
+        return true;
     }
 
-    public void Classe() {
+    public boolean Classe() {
         if (isToken(Tag.KW_compClass)) {
             Funcao1();
         } else if (isToken(Tag.EOF)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'class', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
-    public void DeclaraID() {
+    public boolean DeclaraID() {
         if (isToken(Tag.KW_compVoid)) {
             Funcao6();
         } else if (isToken(Tag.KW_compBool) || isToken(Tag.KW_compInteger) || isToken(Tag.KW_compString) || isToken(Tag.KW_compDouble)) {
@@ -104,18 +121,21 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função DeclaraID");
             }
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'end/return/void/bool/integer/string/double/if/else/while/write/writeln/ID', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void ListaFuncao() {
         if (isToken(Tag.KW_compDef)) {
             Funcao2();
         } else if (!isToken(Tag.KW_compDefstatic)) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'def/defstatic', porem encontrado '" + token.getLexema() + "'");
         }
     }
@@ -124,20 +144,23 @@ public class Sintatico {
         if (isToken(Tag.KW_compDef)) {
             Funcao2();
         } else if (!isToken(Tag.KW_compDefstatic)) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'def/defstatic', porem encontrado '" + token.getLexema() + "'");
         }
     }
 
-    public void Funcao() {
+    public boolean Funcao() {
         if (isToken(Tag.KW_compDef)) {
             Funcao2();
         } else if (isToken(Tag.KW_compDefstatic)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'def/defstatic', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void FKDeclaraID() {
@@ -148,7 +171,7 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função FKDeclaraID");
             }
         } else if (!(isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID))) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'end/return/void/bool/integer/string/double/if/else/while/write/writeln/ID', porem encontrado '" + token.getLexema() + "'");
         }
     }
@@ -161,7 +184,7 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função ListaArg");
             }
         } else if (!isToken(Tag.FechaParenteses)) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'void/bool/integer/string/double/)', porem encontrado '" + token.getLexema() + "'");
         }
     }
@@ -173,12 +196,12 @@ public class Sintatico {
             }
             ListaArg();
         } else if (!isToken(Tag.FechaParenteses)) {
-            //skip()
+            Skip();
             erroSintatico("Esperado ',/)', porem encontrado '" + token.getLexema() + "'");
         }
     }
 
-    public void Arg() {
+    public boolean Arg() {
 
         if (isToken(Tag.KW_compVoid)) {
             Funcao6();
@@ -187,11 +210,14 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função ListaArg");
             }
         } else if (isToken(Tag.FechaParenteses) || isToken(Tag.Virgula)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'void/bool/integer/string/double/)/,', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void Retorno() {
@@ -204,23 +230,26 @@ public class Sintatico {
                 erroSintatico("Esperado ';', porem encontrado '" + token.getLexema() + "'");
             }
         } else if (!isToken(Tag.KW_compEnd)) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'return/end', porem encontrado '" + token.getLexema() + "'");
         }
     }
 
-    public void Main() {
+    public boolean Main() {
         if (isToken(Tag.KW_compEnd)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else if (isToken(Tag.KW_compDefstatic)) {
             Funcao5();
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'end/defstatic', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
-    public void TipoMacro() {
+    public boolean TipoMacro() {
         if (isToken(Tag.KW_compVoid)) {
             Funcao6();
         } else if (isToken(Tag.KW_compBool) || isToken(Tag.KW_compInteger) || isToken(Tag.KW_compString) || isToken(Tag.KW_compDouble)) {
@@ -228,11 +257,14 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função TipoMacro");
             }
         } else if (isToken(Tag.ID)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'void/bool/integer/string/double', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void TipoMacroLinha() {
@@ -244,12 +276,12 @@ public class Sintatico {
                 erroSintatico("Esperado ']', porem encontrado '" + token.getLexema() + "'");
             }
         } else if (!isToken(Tag.ID)) {
-            //skip()
+            Skip();
             erroSintatico("Esperado '[/]', porem encontrado '" + token.getLexema() + "'");
         }
     }
 
-    public void TipoPrimitivo() {
+    public boolean TipoPrimitivo() {
         if (isToken(Tag.KW_compVoid)) {
             Funcao6();
         } else if (isToken(Tag.KW_compBool) || isToken(Tag.KW_compInteger) || isToken(Tag.KW_compString) || isToken(Tag.KW_compDouble)) {
@@ -257,11 +289,14 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função TipoPrimitivo");
             }
         } else if (isToken(Tag.ID) || isToken(Tag.AbreColchetes)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'void/bool/integer/string/double/[', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void ListaCmd() {
@@ -272,7 +307,7 @@ public class Sintatico {
         } else if (isToken(Tag.ID)) {
             Funcao15();
         } else if (!(isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse))) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
         }
     }
@@ -285,12 +320,12 @@ public class Sintatico {
         } else if (isToken(Tag.ID)) {
             Funcao15();
         } else if (!(isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse))) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
         }
     }
 
-    public void Cmd() {
+    public boolean Cmd() {
         if (isToken(Tag.KW_compIf)) {
             Funcao9();
         } else if (isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln)) {
@@ -298,25 +333,31 @@ public class Sintatico {
         } else if (isToken(Tag.ID)) {
             Funcao15();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
-    public void CmdIF() {
+    public boolean CmdIF() {
         if (isToken(Tag.KW_compIf)) {
             Funcao9();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
-    public void CmdIFLinha() {
+    public boolean CmdIFLinha() {
         if (isToken(Tag.KW_compEnd)) {
             if (!eat(Tag.KW_compEnd)) {
                 erroSintatico("Esperado 'end', porem encontrado '" + token.getLexema() + "'");
@@ -339,58 +380,73 @@ public class Sintatico {
                 erroSintatico("Esperado ';', porem encontrado '" + token.getLexema() + "'");
             }
         } else if (isToken(Tag.KW_compReturn) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID) || isToken(Tag.KW_compIf)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
-    public void CmdWhile() {
+    public boolean CmdWhile() {
         if (isToken(Tag.KW_compWhile)) {
             Funcao11();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
-    public void CmdWrite() {
+    public boolean CmdWrite() {
         if (isToken(Tag.KW_compWrite)) {
             Funcao12();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
-    public void CmdWriteln() {
+    public boolean CmdWriteln() {
         if (isToken(Tag.KW_compWriteln)) {
             Funcao13();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.ID)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
-    public void CmdAF() {
+    public boolean CmdAF() {
         if (isToken(Tag.ID)) {
             Funcao15();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
-    public void CmdAFLinha() {
+    public boolean CmdAFLinha() {
         if (isToken(Tag.AbreParenteses)) {
             Funcao3();
             if (!eat(Tag.PontoVirgula)) {
@@ -401,24 +457,30 @@ public class Sintatico {
         } else if (isToken(Tag.OpAtribuicao)) {
             Funcao14();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else/(/[/=', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
-    public void CmdAtribuiLinha() {
+    public boolean CmdAtribuiLinha() {
         if (isToken(Tag.AbreColchetes)) {
             Funcao7();
         } else if (isToken(Tag.OpAtribuicao)) {
             Funcao14();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'if/while/write/writeln/end/return/else/[/=', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void FKExp() {
@@ -429,7 +491,7 @@ public class Sintatico {
             Expressao();
             FKExp();
         } else if (!isToken(Tag.FechaParenteses)) {
-            //skip()
+            Skip();
             erroSintatico("Esperado ',/)', porem encontrado '" + token.getLexema() + "'");
         }
     }
@@ -442,12 +504,12 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função QBExp");
             }
         } else if (!isToken(Tag.FechaParenteses)) {
-            //skip()
+            Skip();
             erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!', porem encontrado '" + token.getLexema() + "'");
         }
     }
 
-    public void Expressao() {
+    public boolean Expressao() {
         if (isToken(Tag.AbreParenteses)) {
             Funcao4();
         } else if (isToken(Tag.ID) || isToken(Tag.ConstInteger) || isToken(Tag.ConstDouble) || isToken(Tag.ConstString) || isToken(Tag.KW_compTrue) || isToken(Tag.KW_compFalse) || isToken(Tag.KW_compVector) || isToken(Tag.OpSubtracao) || isToken(Tag.OpUnarioNegacao)) {
@@ -455,11 +517,14 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função Expressao");
             }
         } else if (isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/,/)/:/]/*/'/'', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void ExpressaoLinha() {
@@ -476,12 +541,12 @@ public class Sintatico {
             Expressao1();
             ExpressaoLinha();
         } else if (!(isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao))) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'and/or/(/,/:/]/*/'/'', porem encontrado '" + token.getLexema() + "'");
         }
     }
 
-    public void Expressao1() {
+    public boolean Expressao1() {
         if (isToken(Tag.AbreParenteses)) {
             Funcao4();
         } else if (isToken(Tag.ID) || isToken(Tag.ConstInteger) || isToken(Tag.ConstDouble) || isToken(Tag.ConstString) || isToken(Tag.KW_compTrue) || isToken(Tag.KW_compFalse) || isToken(Tag.KW_compVector) || isToken(Tag.OpSubtracao) || isToken(Tag.OpUnarioNegacao)) {
@@ -489,11 +554,14 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função Expressao1");
             }
         } else if (isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.KW_compAnd) || isToken(Tag.KW_compOr) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/,/)/:/]/*/'/'', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void Expressao1Linha() {
@@ -522,12 +590,12 @@ public class Sintatico {
                 erroSintatico("Esperado '!=', porem encontrado '" + token.getLexema() + "'");
             }
         } else if (!(isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao) || isToken(Tag.KW_compAnd) || isToken(Tag.KW_compOr))) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'and/or/(/,/:/]/*/'/'', porem encontrado '" + token.getLexema() + "'");
         }
     }
 
-    public void Expressao2() {
+    public boolean Expressao2() {
         if (isToken(Tag.AbreParenteses)) {
             Funcao4();
         } else if (isToken(Tag.ID) || isToken(Tag.ConstInteger) || isToken(Tag.ConstDouble) || isToken(Tag.ConstString) || isToken(Tag.KW_compTrue) || isToken(Tag.KW_compFalse) || isToken(Tag.KW_compVector) || isToken(Tag.OpSubtracao) || isToken(Tag.OpUnarioNegacao)) {
@@ -535,11 +603,14 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função Expressao2");
             }
         } else if (isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.KW_compAnd) || isToken(Tag.KW_compOr) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao) || isToken(Tag.OpMaiorQue) || isToken(Tag.OpMaiorQueIgual) || isToken(Tag.OpMenorQue) || isToken(Tag.OpMenorQueIgual) || isToken(Tag.OpIgual) || isToken(Tag.OpDiferente)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/,/)/:/]/*/'/'/>/>=/</<=/==/!=', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void Expressao2Linha() {
@@ -552,12 +623,12 @@ public class Sintatico {
                 erroSintatico("Esperado '-', porem encontrado '" + token.getLexema() + "'");
             }
         } else if (!(isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao) || isToken(Tag.KW_compAnd) || isToken(Tag.KW_compOr) || isToken(Tag.OpMaiorQue) || isToken(Tag.OpMaiorQueIgual) || isToken(Tag.OpMenorQue) || isToken(Tag.OpMenorQueIgual) || isToken(Tag.OpIgual) || isToken(Tag.OpDiferente))) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'and/or/(/,/:/]/*/'/'', porem encontrado '" + token.getLexema() + "'");
         }
     }
 
-    public void Expressao3() {
+    public boolean Expressao3() {
         if (isToken(Tag.AbreParenteses)) {
             Funcao4();
         } else if (isToken(Tag.ID) || isToken(Tag.ConstInteger) || isToken(Tag.ConstDouble) || isToken(Tag.ConstString) || isToken(Tag.KW_compTrue) || isToken(Tag.KW_compFalse) || isToken(Tag.KW_compVector) || isToken(Tag.OpSubtracao) || isToken(Tag.OpUnarioNegacao)) {
@@ -565,11 +636,14 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função Expressao3");
             }
         } else if (isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.KW_compAnd) || isToken(Tag.KW_compOr) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao) || isToken(Tag.OpMaiorQue) || isToken(Tag.OpMaiorQueIgual) || isToken(Tag.OpMenorQue) || isToken(Tag.OpMenorQueIgual) || isToken(Tag.OpIgual) || isToken(Tag.OpDiferente) || isToken(Tag.OpSoma) || isToken(Tag.OpSubtracao)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/,/)/:/]/*/'/'/>/>=/</<=/==/!=/+/-', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void Expressao3Linha() {
@@ -586,12 +660,12 @@ public class Sintatico {
             Expressao4();
             Expressao3Linha();
         } else if (!(isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.OpSoma) || isToken(Tag.OpSubtracao) || isToken(Tag.KW_compAnd) || isToken(Tag.KW_compOr) || isToken(Tag.OpMaiorQue) || isToken(Tag.OpMaiorQueIgual) || isToken(Tag.OpMenorQue) || isToken(Tag.OpMenorQueIgual) || isToken(Tag.OpIgual) || isToken(Tag.OpDiferente))) {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'and/or/(/,/:/]/*/'/'', porem encontrado '" + token.getLexema() + "'");
         }
     }
 
-    public void Expressao4() {
+    public boolean Expressao4() {
         if (isToken(Tag.AbreParenteses)) {
             Funcao4();
         } else if (isToken(Tag.ID) || isToken(Tag.ConstInteger) || isToken(Tag.ConstDouble) || isToken(Tag.ConstString) || isToken(Tag.KW_compTrue) || isToken(Tag.KW_compFalse) || isToken(Tag.KW_compVector) || isToken(Tag.OpSubtracao) || isToken(Tag.OpUnarioNegacao)) {
@@ -599,11 +673,14 @@ public class Sintatico {
                 erroSintatico("Ocorreu um erro sintatico na função Expressao4");
             }
         } else if (isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/*/'/'', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void Expressao4Linha() {
@@ -618,19 +695,22 @@ public class Sintatico {
                 erroSintatico("Esperado ']', porem encontrado '" + token.getLexema() + "'");
             }
         } else if (!(isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao))) {
-            //skip()
+            Skip();
             erroSintatico("Esperado '(/[/]/*/'/'', porem encontrado '" + token.getLexema() + "'");
         }
 
     }
 
-    public void OpUnario() {
+    public boolean OpUnario() {
         if (isToken(Tag.ID) || isToken(Tag.ConstInteger) || isToken(Tag.ConstDouble) || isToken(Tag.ConstString) || isToken(Tag.KW_compTrue) || isToken(Tag.KW_compFalse) || isToken(Tag.KW_compVector) || isToken(Tag.OpSubtracao) || isToken(Tag.OpUnarioNegacao) || isToken(Tag.AbreParenteses)) {
-            //sync()
+            if (Sync()) {
+                return true;
+            }
         } else {
-            //skip()
+            Skip();
             erroSintatico("Esperado 'ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/*/'/'/(', porem encontrado '" + token.getLexema() + "'");
         }
+        return true;
     }
 
     public void Funcao1() {
