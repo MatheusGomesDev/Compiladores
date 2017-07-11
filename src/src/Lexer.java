@@ -433,7 +433,8 @@ public class Lexer {
         TS tabelaSimbolos = new TS();
         // Os exemplos certos chamam Errado3Sintatico.txt / Errado2Sintatico.txt / Errado1Sintatico.txt
         // Os exemplos errados chamam Correto3Sintatico.txt / Correto2Sintatico.txt / Correto1Sintatico.txt
-        Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Trabalho compiladoes Ultimo 24062017\\TrabCompiladoresAAA1\\src\\Correto3Sintatico.txt");
+        Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Trabalho compiladoes Ultimo 24062017\\TrabCompiladoresAAA1\\src\\Errado3Sintatico.txt");
+        //Lexer lexer = new Lexer("C:\\Users\\piteu\\Desktop\\Ultimo programa comp\\Compiladores\\src\\teste2.pys");
         Sintatico sintatico = new Sintatico(lexer, tabelaSimbolos);  
         sintatico.Programa();
         // Para imprimir a tabela de simbolos, descomente o codigo abaixo

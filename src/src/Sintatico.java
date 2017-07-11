@@ -88,6 +88,7 @@ public class Sintatico {
             Funcao1();
         } else if (isToken(Tag.EOF)) {
             if (Sync()) {
+                erroSintatico("Esperado 'class', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -104,6 +105,7 @@ public class Sintatico {
             Funcao1();
         } else if (isToken(Tag.EOF)) {
             if (Sync()) {
+                erroSintatico("Esperado 'class', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -122,6 +124,7 @@ public class Sintatico {
             }
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
             if (Sync()) {
+                erroSintatico("Esperado 'end/return/void/bool/integer/string/double/if/else/while/write/writeln/ID', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -154,6 +157,7 @@ public class Sintatico {
             Funcao2();
         } else if (isToken(Tag.KW_compDefstatic)) {
             if (Sync()) {
+                erroSintatico("Esperado 'def/defstatic', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -211,6 +215,7 @@ public class Sintatico {
             }
         } else if (isToken(Tag.FechaParenteses) || isToken(Tag.Virgula)) {
             if (Sync()) {
+                erroSintatico("Esperado 'void/bool/integer/string/double/)/,', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -238,6 +243,7 @@ public class Sintatico {
     public boolean Main() {
         if (isToken(Tag.KW_compEnd)) {
             if (Sync()) {
+                erroSintatico("Esperado 'end/defstatic', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else if (isToken(Tag.KW_compDefstatic)) {
@@ -258,6 +264,7 @@ public class Sintatico {
             }
         } else if (isToken(Tag.ID)) {
             if (Sync()) {
+                erroSintatico("Esperado 'void/bool/integer/string/double', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -290,6 +297,7 @@ public class Sintatico {
             }
         } else if (isToken(Tag.ID) || isToken(Tag.AbreColchetes)) {
             if (Sync()) {
+                erroSintatico("Esperado 'void/bool/integer/string/double/[', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -334,6 +342,7 @@ public class Sintatico {
             Funcao15();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse)) {
             if (Sync()) {
+                erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -348,6 +357,7 @@ public class Sintatico {
             Funcao9();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
             if (Sync()) {
+                erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -381,6 +391,7 @@ public class Sintatico {
             }
         } else if (isToken(Tag.KW_compReturn) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID) || isToken(Tag.KW_compIf)) {
             if (Sync()) {
+                erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -395,6 +406,7 @@ public class Sintatico {
             Funcao11();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
             if (Sync()) {
+                erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -409,6 +421,7 @@ public class Sintatico {
             Funcao12();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
             if (Sync()) {
+                erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -423,6 +436,7 @@ public class Sintatico {
             Funcao13();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.ID)) {
             if (Sync()) {
+                erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -437,6 +451,7 @@ public class Sintatico {
             Funcao15();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln)) {
             if (Sync()) {
+                erroSintatico("Esperado 'if/while/write/writeln/end/return/else', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -458,6 +473,7 @@ public class Sintatico {
             Funcao14();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
             if (Sync()) {
+                erroSintatico("Esperado 'if/while/write/writeln/end/return/else/(/[/=', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -474,6 +490,7 @@ public class Sintatico {
             Funcao14();
         } else if (isToken(Tag.KW_compEnd) || isToken(Tag.KW_compReturn) || isToken(Tag.KW_compElse) || isToken(Tag.KW_compIf) || isToken(Tag.KW_compWhile) || isToken(Tag.KW_compWrite) || isToken(Tag.KW_compWriteln) || isToken(Tag.ID)) {
             if (Sync()) {
+                erroSintatico("Esperado 'if/while/write/writeln/end/return/else/[/=', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -518,6 +535,7 @@ public class Sintatico {
             }
         } else if (isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao)) {
             if (Sync()) {
+                erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/,/)/:/]/*/'/'', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -555,6 +573,7 @@ public class Sintatico {
             }
         } else if (isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.KW_compAnd) || isToken(Tag.KW_compOr) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao)) {
             if (Sync()) {
+                erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/,/)/:/]/*/'/'', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -604,6 +623,7 @@ public class Sintatico {
             }
         } else if (isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.KW_compAnd) || isToken(Tag.KW_compOr) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao) || isToken(Tag.OpMaiorQue) || isToken(Tag.OpMaiorQueIgual) || isToken(Tag.OpMenorQue) || isToken(Tag.OpMenorQueIgual) || isToken(Tag.OpIgual) || isToken(Tag.OpDiferente)) {
             if (Sync()) {
+                erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/,/)/:/]/*/'/'/>/>=/</<=/==/!=', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -637,6 +657,7 @@ public class Sintatico {
             }
         } else if (isToken(Tag.PontoVirgula) || isToken(Tag.FechaParenteses) || isToken(Tag.Virgula) || isToken(Tag.FechaColchetes) || isToken(Tag.KW_compAnd) || isToken(Tag.KW_compOr) || isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao) || isToken(Tag.OpMaiorQue) || isToken(Tag.OpMaiorQueIgual) || isToken(Tag.OpMenorQue) || isToken(Tag.OpMenorQueIgual) || isToken(Tag.OpIgual) || isToken(Tag.OpDiferente) || isToken(Tag.OpSoma) || isToken(Tag.OpSubtracao)) {
             if (Sync()) {
+                erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/,/)/:/]/*/'/'/>/>=/</<=/==/!=/+/-', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -674,6 +695,7 @@ public class Sintatico {
             }
         } else if (isToken(Tag.OpMultiplicacao) || isToken(Tag.OpDivisao)) {
             if (Sync()) {
+                erroSintatico("Esperado '(/ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/*/'/'', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
@@ -704,6 +726,7 @@ public class Sintatico {
     public boolean OpUnario() {
         if (isToken(Tag.ID) || isToken(Tag.ConstInteger) || isToken(Tag.ConstDouble) || isToken(Tag.ConstString) || isToken(Tag.KW_compTrue) || isToken(Tag.KW_compFalse) || isToken(Tag.KW_compVector) || isToken(Tag.OpSubtracao) || isToken(Tag.OpUnarioNegacao) || isToken(Tag.AbreParenteses)) {
             if (Sync()) {
+                erroSintatico("Esperado 'ID/ConstInteger/ConstDouble/ConstString/true/false/vector/subtracao/!/*/'/'/(', porem encontrado '" + token.getLexema() + "'");
                 return true;
             }
         } else {
